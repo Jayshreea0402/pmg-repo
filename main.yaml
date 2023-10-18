@@ -258,7 +258,7 @@ Resources:
     Properties:
       Name: BucketArn
       Type: String
-      Value: !GetAtt S3BucketName.Arn
+      Value: !GetAtt public-s3bucket-pmg66.Arn
       Description: SSM Parameter for running date command.
       AllowedPattern: "^[a-zA-Z]{1,10}$"
       Tags:
