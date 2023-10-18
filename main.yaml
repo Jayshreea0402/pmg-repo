@@ -284,9 +284,9 @@ Resources:
           - subnet-07fd123456788a036    
 
 Outputs:
-  S3BucketArn:
-    Fn::GetAtt: !Ref S3Bucket.Arn
-    #Value: !GetAtt 'EC2Instance.PublicDnsName'
+  # S3BucketArn:
+  #   Fn::GetAtt: !Ref S3Bucket.Arn
+  #   #Value: !GetAtt 'EC2Instance.PublicDnsName'
 
   VPC:
     Description: A reference to the created VPC
