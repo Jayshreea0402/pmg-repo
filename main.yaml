@@ -253,6 +253,9 @@ Resources:
                   - '/*'
 
 Outputs:
+  S3BuckerArn:
+    Value: !GetAtt public-s3bucket-pmg66.ARN
+
   VPC:
     Description: A reference to the created VPC
     Value: !Ref VPC
