@@ -256,7 +256,7 @@ Resources:
   BucketParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: BucketArn
+      Name: S3BucketARN
       Type: String
       Value: !GetAtt S3Bucket.Arn
       Description: SSM Parameter for running date command.
