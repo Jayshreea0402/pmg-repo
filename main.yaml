@@ -225,6 +225,7 @@ Resources:
           Rules:
           - ObjectOwnership: BucketOwnerPreferred
       #AccessControl: PublicRead 
+      #BucketArn: !GetAtt Arn 
       LifecycleConfiguration:
         Rules:
           - Id: GlacierRule
@@ -254,7 +255,7 @@ Resources:
 
 Outputs:
   S3BuckerArn:
-    Value: !GetAtt public-s3bucket-pmg66.ARN
+    Value: !GetAtt public-s3bucket-pmg66.Arn
 
   VPC:
     Description: A reference to the created VPC
