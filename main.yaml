@@ -254,7 +254,7 @@ Resources:
                   - '/*'
 
 Outputs:
-  S3BuckerArn:
+  S3BucketArn:
     Value: !GetAtt public-s3bucket-pmg66.Arn
 
   VPC:
