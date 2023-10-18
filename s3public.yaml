@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    DeletionPolicy: Delete
+    Properties:
+      BucketName: pub-pmg
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          IgnorePublicAcls: false
+          RestrictPublicBuckets: false
+      OwnershipControls:
+          Rules:
+          - ObjectOwnership: BucketOwnerPreferred
+      #AccessControl: PublicRead 
+      LifecycleConfiguration:
+        Rules:
+          - Id: GlacierRule
+            Prefix: ''
+            Status: Enabled
+            ExpirationInDays: 2
+            Transitions:
+              - TransitionInDays: 1
+                StorageClass: GLACIER
+  
+  S3BucketPolicy:
+            Type: 'AWS::S3::BucketPolicy'
+            Properties:
+              Bucket: !Ref S3Bucket
+              PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                  - Effect: Allow
+                    Principal: '*'
+                    Action: 's3:GetObject'
+                    Resource:
+                      Fn::Join:
+                        - ''
+                        - - 'arn:aws:s3:::'
+                          - !Ref S3Bucket
+                          - '/*'
+                  
+Outputs:
+  S3BuckerArn:
+    Value: !GetAtt public-s3bucket-pmg66.ARN
+
+  # Outputs:
+  # BucketName:
+  #   Value: !Ref S3Bucket
+  #   Description: Name of the sample Amazon S3 bucket with a lifecycle configuration.
+#       AccessControl: Private
+#       LifecycleConfiguration:
+#         Rules:
+#           - Id: GlacierRule
+#             Prefix: glacier
+#             Status: Enabled
+#             ExpirationInDays: 365
+#             Transitions:
+#               - TransitionInDays: 1
+#                 StorageClass: GLACIER
+# Outputs:
+#   BucketName:
+#     Value: !Ref S3Bucket
+#     Description: Name of the sample Amazon S3 bucket with a lifecycle configuration.
