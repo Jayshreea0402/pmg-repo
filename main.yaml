@@ -264,24 +264,39 @@ Resources:
       Tags:
         Environment: DEV    
 
-  # S3Function:
-  #   Type: AWS::Lambda::Function
-  #   Properties:
-  #     Handler: index.handler
-  #     Role: arn:aws:iam::123456789012:role/lambda-role
-  #     Code:
-  #       S3Bucket: !Ref S3BucketName
-  #       S3Key: function.zip
-  #     Runtime: nodejs18.x
-  #     Timeout: 5
-  #     TracingConfig:
-  #       Mode: Active
-  #     VpcConfig:
-  #       SecurityGroupIds:
-  #         - sg-085912345678492fb
-  #       SubnetIds:
-  #         - subnet-071f712345678e7c8
-  #         - subnet-07fd123456788a036    
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: pmg-lambda666
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - "*"
+            Resource: "*"
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: LambdaFunction666
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.11
+      Role: !GetAtt 'LambdaExecutionRole.Arn'
+      Code:
+        S3Bucket: !Ref S3Bucket
+        S3Key: lambda.zip 
 
 Outputs:
   # S3BucketArn:
